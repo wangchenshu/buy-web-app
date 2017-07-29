@@ -56,12 +56,6 @@
                     <th> 訂單內容 </th>
                     <td> {{ order['訂單內容'] }} </td>
                     <tr>
-                    <th> 建立時間 </th>
-                    <td> {{ order['建立時間'] }} </td>
-                    <tr>
-                    <th> 備註 </th>
-                    <td> {{ order['備註'] }} </td>
-                    <tr>
                     <th> 合計(¥) </th>
                     <td> {{ order['合計(¥)'] }} </td>
                     <tr>
@@ -79,6 +73,12 @@
                     <tr>
                     <th> 總金額(NT$) </th>
                     <td> {{ order['總金額(NT$)'] }} </td>
+                    <tr>
+                    <th> 建立時間 </th>
+                    <td> {{ order['建立時間'] }} </td>
+                    <tr>
+                    <th> 備註 </th>
+                    <td> {{ order['備註'] }} </td>
                     </tr>
                 {% endfor %}
             </table>
