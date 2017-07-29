@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        background: url("{{ url_for('static', filename='images/1.jpg') }}") no-repeat center center;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+      th, td {
+        text-align: center;
+      }
+      .alpha{
+        FILTER: Alpha(opacity=80);/*表格透明*/
+      }
+      table {
+        margin-top: 10%;
+      }
+    </style>
+  </head>
+   <body>
+     <center>
+      <table border = 1 class='alpha'>
+        <tr>
+            <th> 品名 </th>
+            <th> 數量 </th>
+            <th> 匯率 </th>
+            <th> 價格(¥) </th>
+            <th> 價格(NT$) </th>
+            <th> 手續費 </th>
+            <th> 合計(¥) </th>
+            <th> 合計(NT$) </th>
+            <th> 訂單編號 </th>
+        </tr>
+         {% for order in order_items %}
+            <td> {{ order['品名'] }} </td>
+            <td> {{ order['數量'] }} </td>
+            <td> {{ order['匯率'] }} </td>
+            <td> {{ order['價格(¥)'] }} </td>
+            <td> {{ order['價格(NT$)'] }} </td>
+            <td> {{ order['手續費'] }} </td>
+            <td> {{ order['合計(¥)'] }} </td>
+            <td> {{ order['合計(NT$)'] }} </td>
+            <td> {{ order['訂單編號'] }} </td>
+            </tr>
+        {% endfor %}
+      </table>
+      </center>
+   </body>
+</html>

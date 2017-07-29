@@ -1,0 +1,73 @@
+<!--Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+<!-- Custom Theme files -->
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" media="all"/>
+<!-- for-mobile-apps -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="keywords" content="Creative Contact Form Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<!-- //for-mobile-apps -->
+<!-- font-awesome icons -->
+<link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet"> 
+<!-- //font-awesome icons -->
+<!--Google Fonts-->
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+  .title {
+    color: #ffffff;
+  }
+  .my-button {
+    outline: none;
+    color: #FFFFFF;
+    padding: .8em 4em;
+    font-size: .9em;
+    margin: 1em 0 0 1em;
+    cursor: pointer;
+    -webkit-appearance: none;
+    background: #8BC34A;
+    border: 2px solid #8BC34A;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+  }
+</style>
+</head>
+<body>
+  <div class="wthree-dot">
+	<div class="profile">
+	  <div class="wrap">
+      <h1>查詢訂單</h1>            
+      <div class="contact-form">
+        <div id="app">
+          <form action="http://35.164.185.252:5000/order_lists" method="POST">
+            <div class="w3l-contact-left">
+              <div class="styled-input agile-styled-input-top">
+                <input type="text" id="order_number" name="order_number" required="">
+                <label>訂單編號</label>
+                <span></span>
+              </div>
+              <input type="submit" id="submit" name="submit" value="送出">
+            </div>
+            <div class="clear"> </div>
+          </form>	
+        </div>	
+			</div>                        
+			<div class="wthree_footer_copy">
+			    <p>© 2017 Creative Contact Form. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+			</div>
+		</div>
+	</div>
+  </div>
+</body>
+</html>
