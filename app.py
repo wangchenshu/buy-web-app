@@ -41,15 +41,15 @@ def order_list_order_number(order_number):
 
         cursor = cnx.cursor()
 
-        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd from orders WHERE order_number = " + order_number)
+        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         orders = []
 
-        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd) in cursor:
-            #logging.warning("data: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd))
+        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
+
             resp_order = {
                 u'訂單編號': '',
                 u'訂單內容': '',
@@ -60,7 +60,8 @@ def order_list_order_number(order_number):
                 u'運費(¥)': '',
                 u'運費(NT$)': '',
                 u'總金額(¥)': '',
-                u'總金額(NT$)': ''
+                u'總金額(NT$)': '',
+                u'黑貓單號': ''
             }
 
             resp_order[u'訂單編號'] = order_number
@@ -73,6 +74,7 @@ def order_list_order_number(order_number):
             resp_order[u'運費(NT$)'] = freight_ntd
             resp_order[u'總金額(¥)'] = all_price_rmb
             resp_order[u'總金額(NT$)'] = all_price_ntd
+            resp_order[u'黑貓單號'] = ccat_delivery_number
             
             orders.append(resp_order)
 
@@ -103,15 +105,15 @@ def order_list():
 
         cursor = cnx.cursor()
 
-        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd from orders WHERE order_number = " + order_number)
+        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         orders = []
 
-        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd) in cursor:
-            #logging.warning("data: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}".format(order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd))
+        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
+
             resp_order = {
                 u'訂單編號': '',
                 u'訂單內容': '',
@@ -122,7 +124,8 @@ def order_list():
                 u'運費(¥)': '',
                 u'運費(NT$)': '',
                 u'總金額(¥)': '',
-                u'總金額(NT$)': ''
+                u'總金額(NT$)': '',
+                u'黑貓單號': ''
             }
 
             resp_order[u'訂單編號'] = order_number
@@ -135,6 +138,7 @@ def order_list():
             resp_order[u'運費(NT$)'] = freight_ntd
             resp_order[u'總金額(¥)'] = all_price_rmb
             resp_order[u'總金額(NT$)'] = all_price_ntd
+            resp_order[u'黑貓單號'] = ccat_delivery_number
             
             orders.append(resp_order)
 
@@ -164,16 +168,16 @@ def order_items_list_order_number(order_number):
         cursor = cnx.cursor()
 
         if order_number == '0':
-            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number from order_items")
+            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao from order_items")
         else :
-            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number from order_items WHERE order_number = " + order_number)
+            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao from order_items WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         order_items = []
 
-        for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number) in cursor:
+        for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao) in cursor:
             resp_order_item = {
                 u'品名': '',
                 u'數量': '',
@@ -183,7 +187,8 @@ def order_items_list_order_number(order_number):
                 u'手續費': '',
                 u'合計(¥)': '',
                 u'合計(NT$)': '',
-                u'訂單編號': ''
+                u'訂單編號': '',
+                u'淘寶單號': ''
             }
 
             resp_order_item[u'品名'] = name
@@ -195,6 +200,7 @@ def order_items_list_order_number(order_number):
             resp_order_item[u'合計(¥)'] = total_price_rmb
             resp_order_item[u'合計(NT$)'] = total_price_ntd
             resp_order_item[u'訂單編號'] = order_number
+            resp_order_item[u'淘寶單號'] = order_number_taobao
             
             order_items.append(resp_order_item)
 

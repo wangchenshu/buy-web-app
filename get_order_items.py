@@ -22,7 +22,7 @@ else:
 
     cnx = mysql.connector.connect(**config)
     cursor = cnx.cursor(buffered=True)
-    query_str = "SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number from order_items WHERE order_number = " + order_number
+    query_str = "SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao from order_items WHERE order_number = " + order_number
     query = (query_str)
     cursor.execute(query)
 
@@ -30,7 +30,7 @@ else:
     all_ntd = 0.0
     all_items = '' 
 
-    for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number) in cursor:
+    for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao) in cursor:
         print u'商品: %s' % (name)
         print u'數量: %d' % (qty)
         print u'匯率: %.2f' % (exchange_rate)
@@ -40,6 +40,7 @@ else:
         print u'合計: ¥ %.2lf' % (total_price_rmb)
         print u'合計: NT$ %.2lf' % (total_price_ntd)
         print u'訂單編號: %s' % (order_number)
+        print u'淘寶單號: %s' % (order_number_taobao)
         print '--------'
         all_items += name + ', '
         all_rmb += total_price_rmb
