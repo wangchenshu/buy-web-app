@@ -25,25 +25,29 @@
             <th> 品名 </th>
             <th> 數量 </th>
             <th> 匯率 </th>
-            <th> 價格(¥) </th>
-            <th> 價格(NT$) </th>
+            <th> 單價(¥) </th>
+            <th> 單價(NT$) </th>
             <th> 手續費 </th>
             <th> 合計(¥) </th>
             <th> 合計(NT$) </th>
             <th> 訂單編號 </th>
-            <th> 淘寶單號 </th>
+            <th> 淘寶訂單編號 </th>
+            <th> 淘寶貨運單號 </th>
+            <th> 重量(kg) </th>
         </tr>
          {% for order in order_items %}
             <td> {{ order['品名'] }} </td>
             <td> {{ order['數量'] }} </td>
             <td> {{ order['匯率'] }} </td>
-            <td> {{ order['價格(¥)'] }} </td>
-            <td> {{ order['價格(NT$)'] }} </td>
+            <td> {{ order['單價(¥)'] }} </td>
+            <td> {{ order['單價(NT$)'] }} </td>
             <td> {{ order['手續費'] }} </td>
             <td> {{ order['合計(¥)'] }} </td>
             <td> {{ order['合計(NT$)'] }} </td>
             <td> {{ order['訂單編號'] }} </td>
-            <td> {{ order['淘寶單號'] }} </td>
+            <td> {{ order['淘寶訂單編號'] }} </td>
+            <td> {{ order['淘寶貨運單號'] }} </td>
+            <td> {{ order['重量(kg)'] }} </td>
             </tr>
         {% endfor %}
       </table>

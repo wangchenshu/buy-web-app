@@ -16,8 +16,8 @@ config = {
 exchange_rate = 4.6
 fee = 0.03
 
-if len(sys.argv) <= 6:
-    print 'Usage: python %s <name> <qty> <price_rmb> <url> <order_number> <order_number_taobao>' % (sys.argv[0])
+if len(sys.argv) <= 7:
+    print 'Usage: python %s <name> <qty> <price_rmb> <url> <order_number> <order_number_taobao> <taobao_delivery_number>' % (sys.argv[0])
 else:
     name = sys.argv[1]
     qty = int(sys.argv[2])
@@ -29,13 +29,14 @@ else:
     url = sys.argv[4]
     order_number = sys.argv[5]
     order_number_taobao = sys.argv[6]
+    taobao_delivery_number = sys.argv[7]
 
     cnx = mysql.connector.connect(**config)
 
     add_order = ("INSERT INTO order_items "
-                "(name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, url, order_number, order_number_taobao) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-    order_service = (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, url, order_number, order_number_taobao)
+                "(name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, url, order_number, order_number_taobao, taobao_delivery_number) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+    order_service = (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, url, order_number, order_number_taobao, taobao_delivery_number)
 
     try:
         cursor = cnx.cursor(buffered=True)

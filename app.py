@@ -41,14 +41,14 @@ def order_list_order_number(order_number):
 
         cursor = cnx.cursor()
 
-        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
+        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         orders = []
 
-        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
+        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
 
             resp_order = {
                 u'訂單編號': '',
@@ -57,6 +57,7 @@ def order_list_order_number(order_number):
                 u'備註': '',
                 u'合計(¥)': '',
                 u'合計(NT$)': '',
+                u'重量(kg)': '',
                 u'運費(¥)': '',
                 u'運費(NT$)': '',
                 u'總金額(¥)': '',
@@ -70,6 +71,7 @@ def order_list_order_number(order_number):
             resp_order[u'備註'] = remark
             resp_order[u'合計(¥)'] = total_price_rmb
             resp_order[u'合計(NT$)'] = total_price_ntd
+            resp_order[u'重量(kg)'] = weight
             resp_order[u'運費(¥)'] = freight_rmb
             resp_order[u'運費(NT$)'] = freight_ntd
             resp_order[u'總金額(¥)'] = all_price_rmb
@@ -105,14 +107,14 @@ def order_list():
 
         cursor = cnx.cursor()
 
-        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
+        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         orders = []
 
-        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
+        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
 
             resp_order = {
                 u'訂單編號': '',
@@ -121,6 +123,7 @@ def order_list():
                 u'備註': '',
                 u'合計(¥)': '',
                 u'合計(NT$)': '',
+                u'重量(kg)': '',
                 u'運費(¥)': '',
                 u'運費(NT$)': '',
                 u'總金額(¥)': '',
@@ -134,6 +137,7 @@ def order_list():
             resp_order[u'備註'] = remark
             resp_order[u'合計(¥)'] = total_price_rmb
             resp_order[u'合計(NT$)'] = total_price_ntd
+            resp_order[u'重量(kg)'] = weight
             resp_order[u'運費(¥)'] = freight_rmb
             resp_order[u'運費(NT$)'] = freight_ntd
             resp_order[u'總金額(¥)'] = all_price_rmb
@@ -168,39 +172,43 @@ def order_items_list_order_number(order_number):
         cursor = cnx.cursor()
 
         if order_number == '0':
-            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao from order_items")
+            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao, taobao_delivery_number, weight from order_items")
         else :
-            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao from order_items WHERE order_number = " + order_number)
+            query = ("SELECT name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao, taobao_delivery_number, weight from order_items WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         order_items = []
 
-        for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao) in cursor:
+        for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao, taobao_delivery_number, weight) in cursor:
             resp_order_item = {
                 u'品名': '',
                 u'數量': '',
                 u'匯率': '',
-                u'價格(¥)': '',
-                u'價格(NT$)': '',
+                u'單價(¥)': '',
+                u'單價(NT$)': '',
                 u'手續費': '',
                 u'合計(¥)': '',
                 u'合計(NT$)': '',
                 u'訂單編號': '',
-                u'淘寶單號': ''
+                u'淘寶訂單編號': '',
+                u'淘寶貨運單號': '',
+                u'重量(kg)': ''
             }
 
             resp_order_item[u'品名'] = name
             resp_order_item[u'數量'] = qty
             resp_order_item[u'匯率'] = exchange_rate
-            resp_order_item[u'價格(¥)'] = price_rmb
-            resp_order_item[u'價格(NT$)'] = price_ntd
+            resp_order_item[u'單價(¥)'] = price_rmb
+            resp_order_item[u'單價(NT$)'] = price_ntd
             resp_order_item[u'手續費'] = fee
             resp_order_item[u'合計(¥)'] = total_price_rmb
             resp_order_item[u'合計(NT$)'] = total_price_ntd
             resp_order_item[u'訂單編號'] = order_number
-            resp_order_item[u'淘寶單號'] = order_number_taobao
+            resp_order_item[u'淘寶訂單編號'] = order_number_taobao
+            resp_order_item[u'淘寶貨運單號'] = taobao_delivery_number
+            resp_order_item[u'重量(kg)'] = weight
             
             order_items.append(resp_order_item)
 
