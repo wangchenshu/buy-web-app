@@ -17,8 +17,8 @@ config = {
 exchange_rate = 4.6
 fee = 0.03
 
-if len(sys.argv) <= 7:
-    print 'Usage: python %s <order_number> <order_items> <remark> <freight_rmb> <weight> <total_price_rmb> <cargo_order_number>' % (sys.argv[0])
+if len(sys.argv) <= 8:
+    print 'Usage: python %s <order_number> <order_items> <remark> <freight_rmb> <weight> <total_price_rmb> <cargo_order_number> <user>' % (sys.argv[0])
 else:
     order_number = sys.argv[1]
     order_items = sys.argv[2]
@@ -31,13 +31,14 @@ else:
     total_price_ntd = total_price_rmb * exchange_rate
     all_price_rmb = total_price_rmb + (freight_rmb * (1 + fee))
     all_price_ntd = all_price_rmb * exchange_rate
+    user = sys.argv[8]
 
     cnx = mysql.connector.connect(**config)
 
     add_order = ("INSERT INTO orders "
-                "(order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, remark, weight, freight_rmb, freight_ntd, cargo_order_number) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
-    order_service = (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, remark, weight, freight_rmb, freight_ntd, cargo_order_number)
+                "(order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, remark, weight, freight_rmb, freight_ntd, cargo_order_number, user) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
+    order_service = (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, remark, weight, freight_rmb, freight_ntd, cargo_order_number, user)
 
     try:
         cursor = cnx.cursor(buffered=True)

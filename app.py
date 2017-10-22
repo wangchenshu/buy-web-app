@@ -41,14 +41,14 @@ def order_list_order_number(order_number):
 
         cursor = cnx.cursor()
 
-        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number from orders WHERE order_number = " + order_number)
+        query = ("SELECT order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number, user from orders WHERE order_number = " + order_number)
         #logging.warning(query)
 
         cursor.execute(query)
 
         orders = []
 
-        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number) in cursor:
+        for (order_number, order_items, total_price_rmb, total_price_ntd, all_price_rmb, all_price_ntd, created_time, remark, weight, freight_rmb, freight_ntd, ccat_delivery_number, user) in cursor:
 
             resp_order = {
                 u'訂單編號': '',
@@ -62,7 +62,8 @@ def order_list_order_number(order_number):
                 u'運費(NT$)': '',
                 u'總金額(¥)': '',
                 u'總金額(NT$)': '',
-                u'黑貓單號': ''
+                u'黑貓單號': '',
+                u'用戶': ''
             }
 
             resp_order[u'訂單編號'] = order_number
@@ -77,6 +78,8 @@ def order_list_order_number(order_number):
             resp_order[u'總金額(¥)'] = all_price_rmb
             resp_order[u'總金額(NT$)'] = all_price_ntd
             resp_order[u'黑貓單號'] = ccat_delivery_number
+            resp_order[u'用戶'] = user
+
             
             orders.append(resp_order)
 
@@ -179,7 +182,7 @@ def order_items_list_order_number(order_number):
 
         cursor.execute(query)
 
-        order_items = []
+        order_items_list = []
 
         for (name, qty, exchange_rate, price_rmb, price_ntd, fee, total_price_rmb, total_price_ntd, order_number, order_number_taobao, taobao_delivery_number, weight) in cursor:
             resp_order_item = {
@@ -210,12 +213,12 @@ def order_items_list_order_number(order_number):
             resp_order_item[u'淘寶貨運單號'] = taobao_delivery_number
             resp_order_item[u'重量(kg)'] = weight
             
-            order_items.append(resp_order_item)
+            order_items_list.append(resp_order_item)
 
         cursor.close()
         cnx.close()
 
-        return render_template('order_items.html', order_items=order_items)
+        return render_template('order_items.html', order_items_list=order_items_list)
 
     except Exception, ex:
         logging.error(str(ex))
